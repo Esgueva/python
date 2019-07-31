@@ -1,34 +1,32 @@
 import sys
 
-clients = 'Rodrigo, Julia, Mario, '
+clients = ['Rodrigo', 'Julia', 'Mario']
 
-
+# CUDSL -------------------------------------------------
 def create_client(client_name):
     """ Create new client """
     global clients
     if client_name not in clients:
-        clients += client_name
-        _add_coma()
+        clients.append(client_name)
     else:
         print('Client already is in the client\'s list')
 
 
 def update_client(client_name, new_client_name):
     """ Update client """
-    global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',' , new_client_name + ',')
+        index = clients.index(client_name)
+        clients[index] = new_client_name
     else:
         _client_not_found()
 
 
 def delete_client(client_name):
     """ Delete client name """
-    global clients
     
     if client_name in clients:
-        clients = clients.replace(client_name + ',','')
+        clients.remove(client_name)
     else:
         _client_not_found()
     pass
@@ -36,10 +34,8 @@ def delete_client(client_name):
 
 def search_client(client_name):
     """ Search client name in client list """
-    global clients
-    clients_list = clients.split(',')
     
-    for client in clients_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
@@ -51,15 +47,11 @@ def search_client(client_name):
             
 def list_clients():
     """ List client """
-    global clients
-    print(clients)
+    for idx, client in enumerate(clients):
+        print('{}: {}'.format(idx, client))
 
 
-def _add_coma(): # _nombre -> indica que es de uso interno
-    """ Add separator """
-    global clients
-    clients += ', '
-
+# PRIVATE FUNCTIONS -------------------------------------
 
 def _client_not_found():
     """ Return not found message """
@@ -95,17 +87,9 @@ def _get_command():
     return command.upper()
 
 
-def _print_welcome():
-    """ Wellcome to aplication """
-    print('')
-    print('')
-    print('*' * 36)
-    print('*    Welcome to Esgueva Company    *')
-
-
 def _print_options():
     print('*' * 36)
-    print('| What wolud you like to do today? |')
+    print('| What woul d you like to do today? |')
     print('-' * 36)
     print('|         [C]reate client          |')
     print('|         [U]pdate client          |')
@@ -115,6 +99,14 @@ def _print_options():
     print('|         [E]xit   program         |')
     print('-' * 36)
     print('')
+
+
+def _print_welcome():
+    """ Wellcome to aplication """
+    print('')
+    print('')
+    print('*' * 36)
+    print('*    Welcome to Esgueva Company    *')
 
 
 def setup():
@@ -138,6 +130,7 @@ def setup():
         sys.exit()
     else:
         print('Invalid command')
+
 
 if __name__ == '__main__':
     """ Main App """
